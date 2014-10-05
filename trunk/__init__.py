@@ -48,6 +48,8 @@ if "bpy" in locals():
     imp.reload(add_mesh_teapot)
     imp.reload(add_mesh_involute_gear)
     imp.reload(add_mesh_gear_set)
+    imp.reload(add_mesh_helical_gear)
+    imp.reload(add_mesh_cutter)
 else:
     from . import add_mesh_extra_objects
     from . import add_mesh_twisted_torus
@@ -62,6 +64,8 @@ else:
     from . import add_mesh_teapot
     from . import add_mesh_involute_gear
     from . import add_mesh_gear_set
+    from . import add_mesh_helical_gear
+    from . import add_mesh_cutter
 import bpy
 
 
@@ -81,6 +85,7 @@ class INFO_MT_mesh_extras_add(bpy.types.Menu):
         layout.menu("INFO_MT_mesh_misc_add", text="Misc Objects")
         layout.menu("INFO_MT_mesh_involute_gear_add", text="Involute_Gear")
         layout.menu("INFO_MT_mesh_gear_set_add", text="Involute_Gear_Set")
+        layout.menu("INFO_MT_mesh_helical_gear_add", text="Helical_Gear")
 
 class INFO_MT_mesh_gemstones_add(bpy.types.Menu):
     # Define the "Gemstones" menu
@@ -191,6 +196,29 @@ class INFO_MT_mesh_gear_set_add(bpy.types.Menu):
         layout.operator_context = 'INVOKE_REGION_WIN'
         layout.operator("mesh.primitive_gear_set",
             text="Involute Gear Set")
+
+class INFO_MT_mesh_helical_gear_add(bpy.types.Menu):
+    # Define the "Gears" menu
+    bl_idname = "INFO_MT_mesh_helical_gear_add"
+    bl_label = "Helical Gear"
+
+    def draw(self, context):
+        layout = self.layout
+        layout.operator_context = 'INVOKE_REGION_WIN'
+        layout.operator("mesh.primitive_helical_gear",
+            text="Helical Gear")
+
+class INFO_MT_mesh_cutter_add(bpy.types.Menu):
+    # Define the "Gears" menu
+    bl_idname = "INFO_MT_mesh_cutter_add"
+    bl_label = "Cutter"
+
+    def draw(self, context):
+        layout = self.layout
+        layout.operator_context = 'INVOKE_REGION_WIN'
+        layout.operator("mesh.primitive_cutter",
+            text="Cutter")
+
 
 # Register all operators and panels
 
