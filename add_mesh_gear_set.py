@@ -132,13 +132,13 @@ class AddInvoluteGear(bpy.types.Operator):
     teeth1 = IntProperty(name="Teeth 1",
         description="Number of Teeth 1",
         min=4,
-        max=60,
+        max=144,
         #default=8) # matches gear on Radio shack motor 
         default=36)  
     teeth2 = IntProperty(name="Teeth 2",
         description="Number of Teeth 2",
         min=4,
-        max=60,
+        max=144,
         #default=8) # matches gear on Radio shack motor 
         default=24)  
     tooth_thick1=  FloatProperty(name="Tooth Thickness",
