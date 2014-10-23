@@ -123,6 +123,9 @@ class AddInvoluteGear(bpy.types.Operator):
         max=100,
         #default=0.12)
         default=0.11708)
+    internal_b =  BoolProperty(name="Internal Gear",
+        description="Internal Gear",
+        default=False)
 
     def draw(self, context):
         layout = self.layout
@@ -132,6 +135,7 @@ class AddInvoluteGear(bpy.types.Operator):
         box.prop(self, 'base_circle_r')
         box.prop(self, 'outside_circle_r')
         box.prop(self, 'tooth_thick')
+        box.prop(self, 'internal_b')
         box = layout.box()
 
 
@@ -189,19 +193,32 @@ class AddInvoluteGear(bpy.types.Operator):
             fcs.append([j,j+2,j+1])
             fcs.append([j+2,j+3,j+1])
       # done duplicating teeth 
+
+      # change the faces around if it is an internal gear
+      if self.internal_b == True:
+         for i in range(int(len(fcs)-0*(pntsOnTeeth/2-1)) ):
+            #print(fcs)
+            for j in range(3):
+               tmp = fcs[i][j]
+               if (tmp % 2 == 0):  # even number
+                  fcs[i][j] = fcs[i][j] + int(pntsOnTeeth)
+                  if fcs[i][j] > len(pnts)-1:
+                     fcs[i][j] = fcs[i][j] - len(pnts)
+
       
-      # make center circle
-      pnts.append([0,0,0])
-      for i in range(N):
-         a = i*nn
-         b = i*nn +1
-         c = len(pnts)-1
-         fcs.append([a,b,c])
-         a = i*nn + pntsOnTeeth 
-         if (i==N-1):
-            fcs.append([b,0,c])
-         else:
-            fcs.append([b,a,c])
+      if self.internal_b != True: 
+         # make center circle
+         pnts.append([0,0,0])
+         for i in range(N):
+            a = i*nn
+            b = i*nn +1
+            c = len(pnts)-1
+            fcs.append([a,b,c])
+            a = i*nn + pntsOnTeeth 
+            if (i==N-1):
+               fcs.append([b,0,c])
+            else:
+               fcs.append([b,a,c])
      
       
       create_mesh_object(context,pnts,[],fcs,"myGear")

@@ -250,7 +250,8 @@ class AddInvoluteGear(bpy.types.Operator):
       tooth_thick2a = tooth_thick2a_/Ra2; # tooth thick 2 at pitch circle 
       #print('Tooth Thickness of Gear 2 at pitch circle in Radians: ', tooth_thick2a);
       tooth_thick2  = tooth_thick2a + 2*involute(phi); 
-      ro2 = Ra2*1.05;
+      ro2 = Ra2+(Ra1-Rb1);
+
        
       #tooth_thick2 = self.tooth_thick1;
       #bpy.ops.mesh.primitive_involute_gear(verts_per_tooth=inc, number_of_teeth=N2, base_circle_r=Rb2, outside_circle_r=ro1, tooth_thick=tooth_thick2, internal_b=False, bevel_angle=self.bevel*pi/180, undercut=self.undercut)
