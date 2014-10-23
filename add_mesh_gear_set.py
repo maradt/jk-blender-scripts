@@ -226,25 +226,26 @@ class AddInvoluteGear(bpy.types.Operator):
 
       #bpy.ops.mesh.primitive_involute_gear(verts_per_tooth=inc, number_of_teeth=N1, base_circle_r=Rb1, outside_circle_r=ro1, tooth_thick=tooth_thick1, internal_b=False, bevel_angle=self.bevel*pi/180, undercut=self.undercut);
       bpy.ops.mesh.primitive_involute_gear(verts_per_tooth=inc, number_of_teeth=N1, base_circle_r=Rb1, outside_circle_r=ro1, tooth_thick=tooth_thick1);
+      print("Gear 1: Number of Teeth: ", N1, " Base Circle: ", Rb1, " Outside Circle: ", ro1, " Tooth Thickness: ", tooth_thick1)
       
       bpy.ops.transform.rotate(value=pi/N1,axis=[0,0,1])
 
       # Radius of pitch circle 
       Ra1 = ((tan(phi) * Rb1)**2 + Rb1**2)**(0.5);
       #print('pi = ', pi);
-      print('Ra1 = ', Ra1);
+      print('Gear 1 Pitch Circle Radius: ', Ra1);
       # Thickness of tooth 1 at pitch circle
       #tooth_thick1a = tooth_thick1 - 2*involute(phi); # radians
       tooth_thick1a = 2*(tooth_thick1/2-involute(phi)) #tooth_thick1 - 2*involute(phi); # radians
-      print('Tooth Thickness of Gear 1 at pitch circle in Radians: ', tooth_thick1a);
+      #print('Tooth Thickness of Gear 1 at pitch circle in Radians: ', tooth_thick1a);
       # ratio of N1 to N2 dictates ratio of Ra1 Ra2
       GRatio = N2/N1;
       Ra2 = GRatio * Ra1;  # Radius of pitch circle for Gear 2
       Rb2 = (Ra2**2/((tan(phi))**2+1))**0.5;
-      print('Rb2 = ', Rb2);
+      print('Gear 2 Pitch Circle Radius: ', Rb2);
       # Gap between teeth in Gear 1 at pitch circle
       gap1a = 2*pi/N1 - tooth_thick1a; # in radians
-      print('Gap Thickness of Gear 1 at pitch circle in Radians: ', gap1a);
+      #print('Gap Thickness of Gear 1 at pitch circle in Radians: ', gap1a);
       gap1a_ = gap1a * Ra1; # in length
       tooth_thick2a_ =  gap1a_;      # gap thickness one in length is tooth thickness 2 in length on pitch circle (no backlash)
       tooth_thick2a = tooth_thick2a_/Ra2; # tooth thick 2 at pitch circle 
@@ -256,6 +257,7 @@ class AddInvoluteGear(bpy.types.Operator):
       #tooth_thick2 = self.tooth_thick1;
       #bpy.ops.mesh.primitive_involute_gear(verts_per_tooth=inc, number_of_teeth=N2, base_circle_r=Rb2, outside_circle_r=ro1, tooth_thick=tooth_thick2, internal_b=False, bevel_angle=self.bevel*pi/180, undercut=self.undercut)
       bpy.ops.mesh.primitive_involute_gear(verts_per_tooth=inc, number_of_teeth=N2, base_circle_r=Rb2, outside_circle_r=ro2, tooth_thick=tooth_thick2)
+      print("Gear 2: Number of Teeth: ", N2, " Base Circle: ", Rb2, " Outside Circle: ", ro2, " Tooth Thickness: ", tooth_thick2)
       bpy.ops.transform.rotate(value=pi,axis=[0,0,1])
       bpy.ops.transform.translate(value=(Ra1+Ra2,0,0), constraint_axis=(True,False, False))
       
